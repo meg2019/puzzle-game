@@ -40,7 +40,12 @@ public class PuzzleService implements IPuzzleService {
 
 	@Override
 	public UserDto addPlayer(NewUserDto newUser) {
+		long prevPlayerId = 0;
+		if (playerRepository.existsById(0)) {
+			prevPlayerId = playerRepository.count();
+		}
 		Player player = modelMapper.map(newUser, Player.class);
+		player.setId(prevPlayerId);
 		playerRepository.save(player);
 		return modelMapper.map(player, UserDto.class);
 	}
@@ -67,8 +72,13 @@ public class PuzzleService implements IPuzzleService {
 
 	@Override
 	public PuzzleDto createPuzzle(Integer numOfItems) {
+		long prevPuzzleID = 0;
+		if (puzzleRepository.existsById(0)) {
+			prevPuzzleID = puzzleRepository.count();
+		}
 		Puzzel puzzle = new Puzzel();
 		puzzle.setNumOfItems(numOfItems);
+		puzzle.setId(prevPuzzleID);
 		puzzleRepository.save(puzzle);
 		return modelMapper.map(puzzle, PuzzleDto.class);
 	}
@@ -94,17 +104,22 @@ public class PuzzleService implements IPuzzleService {
 
 	@Override
 	public ResultDto game(Integer puzzleId, AnswerDto game) {
+		long prevResultId = 0;
 		Puzzel sessionPuzzle = puzzleRepository.findById(puzzleId).orElseThrow(() -> new PuzzleNotFoundException(puzzleId));
 		Player sessionPlayer = playerRepository.findById(game.getPlayerId()).orElseThrow(() -> new PlayerNotFoundException(game.getPlayerId()));
+		if (examGameRepository.existsById(0)) {
+			prevResultId = examGameRepository.count();
+		}
 		Integer numOfItems = sessionPuzzle.getNumOfItems();
 		Set<Integer> puzzle = new HashSet<>();
-		for (int i = 0; i < numOfItems; i++) {
+		for (int i = 1; i <= numOfItems; i++) {
 			puzzle.add(i);
 		}
 		puzzle.removeAll(game.getItemsFound());
 		ExamResult result = new ExamResult();
 		result.setName(sessionPlayer.getName());
 		result.setMissingItems(puzzle);
+		result.setId(prevResultId);
 		examGameRepository.save(result);
 		return modelMapper.map(result, ResultDto.class);
 	}

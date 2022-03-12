@@ -15,7 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Document(collection = "Results")
 public class ExamResult {
-	int id;
+	long id;
 	String name;
 	Set<Integer> missingItems;
 	

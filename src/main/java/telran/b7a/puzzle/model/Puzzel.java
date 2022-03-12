@@ -15,6 +15,6 @@ import lombok.Setter;
 @Document(collection = "Puzzles")
 public class Puzzel {
 	@Id
-	int id;
+	long id;
 	Integer numOfItems;
 }

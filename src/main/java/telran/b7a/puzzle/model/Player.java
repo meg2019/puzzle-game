@@ -1,7 +1,5 @@
 package telran.b7a.puzzle.model;
 
-import java.time.LocalDate;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,7 +15,7 @@ import lombok.Setter;
 @Document(collection = "Players")
 public class Player {
 	@Id
-	int id;
+	long id;
 	String name;
 	String birthDate;
 }
