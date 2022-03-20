@@ -1,7 +1,11 @@
 package telran.b7a.puzzle.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,9 +16,14 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "Puzzles")
-public class Puzzel {
+@Entity
+public class Puzzel implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5070552345440029389L;
 	@Id
-	long id;
-	Integer numOfItems;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	int id;
+	int numOfItems;
 }

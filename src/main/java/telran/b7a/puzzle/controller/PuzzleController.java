@@ -13,6 +13,7 @@ import telran.b7a.puzzle.dto.NewUserDto;
 import telran.b7a.puzzle.dto.PuzzleDto;
 import telran.b7a.puzzle.dto.ResultDto;
 import telran.b7a.puzzle.dto.UserDto;
+import telran.b7a.puzzle.exceptions.NotFoundException;
 import telran.b7a.puzzle.service.IPuzzleService;
 
 @RestController
@@ -26,7 +27,7 @@ public class PuzzleController {
 	}
 	
 	@PostMapping("/puzzle/{puzzleId}")
-	public ResultDto checkResult(@RequestBody AnswerDto answer, @PathVariable Integer puzzleId) {
+	public ResultDto checkResult(@RequestBody AnswerDto answer, @PathVariable Integer puzzleId) throws NotFoundException {
 		return puzzleService.game(puzzleId, answer);
 		
 	}

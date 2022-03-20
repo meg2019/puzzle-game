@@ -1,8 +1,13 @@
 package telran.b7a.puzzle.model;
 
+import java.io.Serializable;
 import java.util.Set;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,10 +18,18 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "Results")
-public class ExamResult {
-	long id;
+@Entity
+
+public class ExamResult implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6955705896209311031L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	int id;
 	String name;
+	@ElementCollection(targetClass = Integer.class)
 	Set<Integer> missingItems;
 	
 }
